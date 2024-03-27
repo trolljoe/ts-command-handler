@@ -1,0 +1,15 @@
+{
+    "name": "ts-command-handler",
+    "description": "A quick and easy TypeScript command handler for Discord.JS",
+    "scripts": {
+        "start": "tsx src/index.ts"
+    },
+    "devDependencies": {
+        "tsx": "^4.7.1",
+        "typescript": "^5.4.3"
+    },
+    "dependencies": {
+        "discord.js": "^14.14.1",
+        "dotenv": "^16.4.5"
+    }
+}
