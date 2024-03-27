@@ -9,7 +9,6 @@ import type {
     UserContextMenuCommandInteraction,
 } from "discord.js";
 
-// Adjusted Command type
 export type Command =
     | {
           role: "CHAT_INPUT";
