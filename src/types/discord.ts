@@ -1,11 +1,11 @@
 import type {
     AnySelectMenuInteraction,
     ApplicationCommandOption,
+    AutocompleteInteraction,
     ButtonInteraction,
     ChatInputCommandInteraction,
     MessageContextMenuCommandInteraction,
     ModalSubmitInteraction,
-    SelectMenuComponentOptionData,
     UserContextMenuCommandInteraction,
 } from "discord.js";
 
@@ -64,6 +64,11 @@ export type Command =
           role: "MODAL_SUBMIT";
           custom_id: string;
           run: (interaction: ModalSubmitInteraction) => unknown;
+      }
+    | {
+          role: "AUTOCOMPLETE";
+          name: `${string}-autocomplete`;
+          run: (interaction: AutocompleteInteraction) => unknown;
       };
 
 export type CommandNoRun = Omit<Command, "run">;

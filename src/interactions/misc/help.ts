@@ -5,6 +5,15 @@ export default {
     name: "help",
     role: "CHAT_INPUT",
     description: "Get help with the bot!",
+    options: [
+        {
+            type: 3,
+            name: "command",
+            description: "The command you need help with",
+            required: false,
+            autocomplete: true,
+        },
+    ],
     run: async (interaction) => {
         const button = new ButtonBuilder()
             .setCustomId("blah")

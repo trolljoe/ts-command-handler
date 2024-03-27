@@ -27,7 +27,7 @@ export default async function (client: Client) {
                     "name" in command ? command.name : command.custom_id,
                     command as Command,
                 );
-                if ("name" in command) {
+                if ("name" in command && command.role !== "AUTOCOMPLETE") {
                     loadedCommands.push(JSON.parse(JSON.stringify(command)));
                 }
             }
