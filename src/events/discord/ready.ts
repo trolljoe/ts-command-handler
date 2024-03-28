@@ -22,12 +22,21 @@ export default async function (client: Client) {
                             `/src/interactions/${folder}/${interaction}`,
                         )
                     )
-                ).default as Command;
+                ).default as Command & { type?: number };
+                if (
+                    commands.get(
+                        "name" in command ? command.name : command.custom_id,
+                    )
+                )
+                    throw Error("Duplicate command name or custom_id");
                 commands.set(
                     "name" in command ? command.name : command.custom_id,
                     command as Command,
                 );
                 if ("name" in command && command.role !== "AUTOCOMPLETE") {
+                    if (command.role !== "CHAT_INPUT")
+                        command.type =
+                            command.role === "MESSAGE_CONTEXT_MENU" ? 3 : 2;
                     loadedCommands.push(JSON.parse(JSON.stringify(command)));
                 }
             }

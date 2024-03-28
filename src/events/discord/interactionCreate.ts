@@ -7,9 +7,8 @@ export default async function (client: Client) {
         if (!("commandName" in interaction)) {
             finder = interaction.customId;
         } else {
-            if (interaction.isAutocomplete())
-                finder = interaction.commandName + "-autocomplete";
-            else finder = interaction.commandName;
+            finder = interaction.commandName;
+            interaction.isAutocomplete() ? (finder += "-autocomplete") : finder;
         }
         const command = commands.get(finder);
         if (!command) return;

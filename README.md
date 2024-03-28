@@ -30,3 +30,33 @@ With this, there is event and interaction handling, all seperated into different
 ## Contributions
 
 If you wish to contribute to this template, feel free to make a pull request and I will review it. If you have any issues, feel free to open an issue and I will try to help you out as best as I can.
+
+## API Docs
+
+### Command
+
+With commands, the handler does not use the slash command builder Discord.JS has because of how the handler works. The handler doesn't just handle slash commands but handles other stuff like buttons and select menus. Because of this, the handler uses a custom command class that is used to handle all the commands.
+
+The command class differs depending on the role of the command, here are the current roles you can choose and what they mean:
+
+-   `CHAT_INPUT`: This is the role for slash commands, this is the role you want if you just want to make a slash command.
+-   `MESSAGE_CONTEXT_MENU`: You know when you right click a message and apps will appear with a load of bots? This is the role for that.
+-   `USER_CONTEXT_MENU`: Sometimes when you right click a user, apps will appear with a load of bots. If you want that, use this role.
+-   `SELECT_MENU`: This is the role for select menus, this is the role you want if you want to make a select menu.
+-   `BUTTON`: This is the role for button interactions, if you want something to happen when you click a button, use this role.
+-   `MODAL_SUBMIT`: This is the role for modals that are submitted, if you want to do something when a modal is submitted, use this role.
+-   `AUTOCOMPLETE`: When autocomplete is ran, this role will be triggered to get a response.
+
+All these classes do different things as explained above, and because of that the information you need to give will differ. Here is the information you need to give for each role:
+
+-   `CHAT_INPUT`: You need to give the name of the command, the description of the command, the options of the command and the default permission of the command. Some of these can be omitted and you can also add more, for more information check [the Discord Developer Docs](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure)
+-   `MESSAGE_CONTEXT_MENU`: You need to give the name of the interaction, the default permission of the command and the description of the command. Some of these can be omitted and you can also add more, for more information check [the Discord Developer Docs](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure)
+-   `USER_CONTEXT_MENU`: You will have to give the name of the interaction, the default permission of the command and the description of the command. Some of these can be omitted and you can also add more, for more information check [the Discord Developer Docs](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure)
+-   `SELECT_MENU`: You will have to give the custom_id of the interaction (this is to indicate which select menu to work with when you interact with a certain select menu, you will add a custom_id to a select menu when you define it, make sure it's the same in the select menu file). Check the [Discord Developer Docs](https://discord.com/developers/docs/interactions/message-components#select-menus) for more information.
+-   `BUTTON`: You will have to give the custom_id of the interaction (this is to indicate which button interaction should be ran when you click a certain button, you will add a custom_id to a button when you define it, make sure it's the same in the button file). Check the [Discord Developer Docs](https://discord.com/developers/docs/interactions/message-components#buttons) for more information.
+-   `MODAL_SUBMIT`: You will have to give the custom_id of the interaction (this is to indicate which modal should be ran when you submit a certain modal, you will add a custom_id to a modal when you define it, make sure it's the same in the modal file). Check the [Discord Developer Docs](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal) for more information.
+-   `AUTOCOMPLETE`: You will have to give the name of the command that this autocomplete will be running on, for instance if you need autocomplete on the help command, you will call the autocomplete `help-autocomplete`. You need to add `-autocomplete` on every name here, you will get an error anyway if you don't. For more information check [the Discord Developer Docs](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure)
+
+### As for running the interactions.
+
+Usually intellisense will help with this, the role will be taken into consideration and the `interaction` variable will modify it's type depending on the role. You will be told if something doesn't exist on that role through your IDE, if it has intellisense enabled.
