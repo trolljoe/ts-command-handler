@@ -6,21 +6,14 @@ import { Command, CommandNoRun } from "../../types/discord";
 
 export default async function (client: Client) {
     client.on("ready", async () => {
-        const commandFolders = readdirSync(
-            path.join(process.cwd(), "/src/interactions"),
-        );
+        const commandFolders = readdirSync("./src/interactions");
         const loadedCommands: CommandNoRun[] = [];
         for (const folder of commandFolders) {
-            const interactions = readdirSync(
-                path.join(process.cwd(), `/src/interactions/${folder}`),
-            );
+            const interactions = readdirSync(`./src/interactions/${folder}`);
             for (const interaction of interactions) {
                 const command = (
                     await import(
-                        path.join(
-                            process.cwd(),
-                            `/src/interactions/${folder}/${interaction}`,
-                        )
+                            `../../interactions/${folder}/${interaction}`
                     )
                 ).default as Command & { type?: number };
                 if (
@@ -107,3 +100,7 @@ const isDeepEqual = (
 const isObject = (object: unknown) => {
     return object != null && typeof object === "object";
 };
+
+function cwd() {
+    return __dirname.split("/").slice(0, -2).join("/");
+}

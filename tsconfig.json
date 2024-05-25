@@ -8,6 +8,9 @@
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
-        "noImplicitAny": false
-    }
+        "noImplicitAny": false,
+        "outDir": "./dist",
+        "rootDir": "./src"
+    },
+    "exclude": ["node_modules", "dist"]
 }
