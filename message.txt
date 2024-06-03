@@ -1,0 +1,69 @@
+{
+  "hits": [
+    {
+      "id": "78b79803-da00-4208-86cf-14d360352712202405-2900-3810-",
+      "bios": null,
+      "core": null,
+      "icon": "Switch",
+      "link": "https://madloader.com/cuphead-switch-nsp/",
+      "playable": "False",
+      "system": "switch,nintendo switch",
+      "title": "Cuphead – (Update) (Switch NSP)",
+      "igdb_url": "https://igdb.com/games/no-second-prize",
+      "site": "Madloader"
+    },
+    {
+      "id": "cc22810c-78ac-4f2e-bfb9-ca5a24e97aba202405-2901-0827-",
+      "bios": null,
+      "core": null,
+      "icon": "Switch",
+      "link": "https://madloader.com/cuphead-switch-xci/",
+      "playable": "False",
+      "system": "switch,nintendo switch",
+      "title": "Cuphead (Switch XCI)",
+      "igdb_url": "https://igdb.com/games/atrophy-xcix",
+      "site": "Madloader"
+    },
+    {
+      "id": "b9ff35bf-d272-4822-9afd-6305075770b1202405-2902-5931-",
+      "bios": null,
+      "core": null,
+      "icon": "PC",
+      "link": "https://steamrip.com/cuphead-free-download-1d/",
+      "playable": "False",
+      "system": "pc,repacks",
+      "title": "Cuphead  (v1.3.4)",
+      "igdb_url": "https://igdb.com/games/cuphead--1",
+      "site": "SteamRip"
+    },
+    {
+      "id": "d8fe0477-52b4-4fc6-85ac-da62717c45af202405-2904-1153-",
+      "bios": null,
+      "core": null,
+      "icon": "PC",
+      "link": "https://gamesdrive.net/Thread-Cuphead-The-Delicious-Last-Course-SKIDROW",
+      "playable": "False",
+      "system": "pc,repack",
+      "title": "Cuphead The Delicious Last Course-SKIDROW",
+      "igdb_url": "https://igdb.com/games/cuphead-and-the-delicious-last-course",
+      "site": "Gamesdrive"
+    },
+    {
+      "id": "429125e5-f12f-458e-ad06-286a4f3a225f202405-2900-5834-",
+      "bios": null,
+      "core": null,
+      "icon": "PC",
+      "link": "https://kaoskrew.org./viewtopic.php?t=6630&sid=3a13461d1c59675038112d6de702cb9a",
+      "playable": "False",
+      "system": "pc,kaoskrew,repacks",
+      "title": "Cuphead v1 3 2 MULTi12 REPACK-KaOs",
+      "igdb_url": "https://igdb.com/games/kao-the-kangaroo-mystery-of-the-volcano",
+      "site": "KaosKrew"
+    }
+  ],
+  "query": "cuphead",
+  "processingTimeMs": 3,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 5
+}
