@@ -1,13 +1,9 @@
 import {
-ActionRowBuilder, 
-CommandInteraction,     
-StringSelectMenuBuilder,
-StringSelectMenuInteraction,
-EmbedBuilder,
-Embed,
+    ActionRowBuilder, 
+    StringSelectMenuBuilder,
+    EmbedBuilder,
+    StringSelectMenuInteraction,
 } from "discord.js";
-
-import { Command } from "../../types/discord";
 
 export default {
     name: "search",
@@ -35,6 +31,7 @@ export default {
                 .setDescription('Please provide a game name.');
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
+
         const option: RequestInit = {
             method: 'POST',
             headers: {
@@ -56,23 +53,17 @@ export default {
                 value: `${index + 1}-${hit.title}`,
             }));
 
-            // Extract the first result (if available)
-            const result = data.hits[0];
-
             const selectMenu = new StringSelectMenuBuilder()
                 .setCustomId('select-game')
                 .setPlaceholder('Select a game')
                 .addOptions(options);
-            const row =
-                new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-                    selectMenu,
-                );
+
+            const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu);
 
             const embed = new EmbedBuilder()
                 .setColor(0x8C2B21)
                 .setDescription('Choose a game from the list:');
 
-            
             await interaction.reply({
                 embeds: [embed],
                 components: [row],
@@ -83,10 +74,9 @@ export default {
             await interaction.reply({ content: 'An error occurred during the search.', ephemeral: false });
         }
     },
-}
-export async function handleSelectMenuInteraction(
-    interaction: StringSelectMenuInteraction,
-) {
+};
+
+export async function handleSelectMenuInteraction(interaction: StringSelectMenuInteraction) {
     interface SearchResult {
         id: string;
         title: string;
@@ -95,14 +85,10 @@ export async function handleSelectMenuInteraction(
         igdb_url: string;
         system: string;
     }
+
     if (interaction.customId === 'select-game') {
-        const newGame = `${interaction.values[0]}`;
-        
-        if (!newGame) {
-            const errorEmbed = new EmbedBuilder()
-                .setColor(0x8C2B21)
-                .setDescription("For some reason, no games were found with that specific name, lmao")
-        }
+        const newGame = interaction.values[0].split('-')[1];
+
         const option: RequestInit = {
             method: 'POST',
             headers: {
@@ -112,20 +98,30 @@ export async function handleSelectMenuInteraction(
             },
             body: JSON.stringify({ q: newGame, limit: 2, page: 1 })
         };
-        const response = await fetch('https://search.rezi.one/indexes/rezi/search', option);
-        const data: { hits: Array<SearchResult> } = await response.json();
 
-        const gameEmbed = new EmbedBuilder()
-            .setColor(0x8C2B21)
-            .setTitle(data.hits[0]?.title)
-            .setURL(data.hits[0]?.link)
-            .addFields(
-                { name: 'Game Name:', value: data.hits[0]?.title || 'N/A', inline: true },
-                { name: 'Download link:', value: data.hits[0]?.link || 'N/A', inline: true },
-                { name: 'IGDB:', value: data.hits[0]?.igdb_url || 'N/A', inline: true },
-                { name: 'Site:', value: data.hits[0]?.site || 'N/A', inline: true },
-                { name: 'Platform/Scene Groups:', value: data.hits[0]?.system || 'N/A', inline: true },
-            );
-        await interaction.reply({ embeds: [gameEmbed]});
+        try {
+            const response = await fetch('https://search.rezi.one/indexes/rezi/search', option);
+            if (!response.ok) {
+                throw new Error(`HTTP error status: ${response.status}`);
+            }
+            const data: { hits: Array<SearchResult> } = await response.json();
+
+            const gameEmbed = new EmbedBuilder()
+                .setColor(0x8C2B21)
+                .setTitle(data.hits[0]?.title || 'N/A')
+                .setURL(data.hits[0]?.link || 'N/A')
+                .addFields(
+                    { name: 'Game Name:', value: data.hits[0]?.title || 'N/A', inline: true },
+                    { name: 'Download link:', value: data.hits[0]?.link || 'N/A', inline: true },
+                    { name: 'IGDB:', value: data.hits[0]?.igdb_url || 'N/A', inline: true },
+                    { name: 'Site:', value: data.hits[0]?.site || 'N/A', inline: true },
+                    { name: 'Platform/Scene Groups:', value: data.hits[0]?.system || 'N/A', inline: true },
+                );
+
+            await interaction.reply({ embeds: [gameEmbed], ephemeral: true });
+        } catch (err) {
+            console.error(err);
+            await interaction.reply({ content: 'An error occurred while retrieving the game details.', ephemeral: true });
+        }
     }
 }
