@@ -1,21 +1,28 @@
 import { Client, Interaction } from "discord.js";
 import { commands } from "../..";
+import { handleSelectMenuInteraction } from "../../interactions/misc/search";
+
 
 export default async function (client: Client) {
-    client.on("interactionCreate", async (interaction) => {
+    client.on("interactionCreate", async (interaction: Interaction) => {
         let finder: string;
-        if (!("commandName" in interaction)) {
-            finder = interaction.customId;
-        } else {
+
+        if (interaction.isCommand()) {
             finder = interaction.commandName;
-            interaction.isAutocomplete() ? (finder += "-autocomplete") : finder;
+        } else if (interaction.isAutocomplete()) {
+            finder = `${interaction.commandName}-autocomplete`;
+        } else if (interaction.isStringSelectMenu()) {
+            await handleSelectMenuInteraction(interaction);
+            return;
+        } else {
+            return;
         }
+
         const command = commands.get(finder);
         if (!command) return;
+
         try {
-            await (command.run as (interaction: Interaction) => unknown)(
-                interaction,
-            );
+            await (command.run as (interaction: Interaction) => unknown)(interaction);
         } catch (error) {
             console.error(error);
             if (interaction.isCommand()) {
